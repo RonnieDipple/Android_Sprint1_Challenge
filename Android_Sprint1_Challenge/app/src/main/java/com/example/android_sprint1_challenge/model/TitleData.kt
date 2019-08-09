@@ -3,7 +3,8 @@ package com.example.android_sprint1_challenge.model
 import android.net.Uri
 import java.io.Serializable
 
-class TitleData (uri: Uri? = null, var movieTitle:String): Serializable{
+class TitleData (uri: Uri? = null): Serializable{
+
 
     companion object{
         const val TITLE_TAG = "title"
@@ -13,6 +14,8 @@ class TitleData (uri: Uri? = null, var movieTitle:String): Serializable{
     fun getUri(): Uri{
         return Uri.parse(uriString)
     }
+
+
 
     fun setUri(uri: Uri?){
         uriString = uri.toString()

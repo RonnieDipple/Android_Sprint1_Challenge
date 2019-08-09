@@ -2,11 +2,13 @@ package com.example.android_sprint1_challenge.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.example.android_sprint1_challenge.R
 import com.example.android_sprint1_challenge.model.TitleData
+import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity() {
@@ -27,14 +29,24 @@ class ListActivity : AppCompatActivity() {
                 ADD_TITLE_CODE
             )
         }
+
+
+        val extra = intent.getSerializableExtra(TitleData.TITLE_TAG)
+        if(extra!=null){
+            populateList(ADD_TITLE_CODE)
+
+        }
+
+
     }
 
     fun createTextView(titleData: TitleData, index: Int): TextView{
         val textView = TextView(this)
         textView.textSize = 15f
         //TODO may display title wrong
-        textView.text = titleData.movieTitle
-
+        textView.id = index
+        textView.text = titleData.getUri().toString()
+        movie_list_layout.setBackgroundColor(Color.CYAN)
         return textView
     }
 
