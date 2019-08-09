@@ -1,9 +1,9 @@
-package com.example.android_sprint1_challenge
+package com.example.android_sprint1_challenge.model
 
 import android.net.Uri
 import java.io.Serializable
 
-class TitleData (uri: Uri? = null): Serializable{
+class TitleData (uri: Uri? = null, var movieTitle:String): Serializable{
 
     companion object{
         const val TITLE_TAG = "title"

@@ -1,10 +1,12 @@
-package com.example.android_sprint1_challenge
+package com.example.android_sprint1_challenge.ui
 
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.example.android_sprint1_challenge.R
+import com.example.android_sprint1_challenge.model.TitleData
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity() {
@@ -21,7 +23,9 @@ class ListActivity : AppCompatActivity() {
 
         btn_add_movie.setOnClickListener {
             val intent = Intent (this, EditActivity::class.java)
-            startActivityForResult(intent, ADD_TITLE_CODE)
+            startActivityForResult(intent,
+                ADD_TITLE_CODE
+            )
         }
     }
 
@@ -29,7 +33,7 @@ class ListActivity : AppCompatActivity() {
         val textView = TextView(this)
         textView.textSize = 15f
         //TODO may display title wrong
-        textView.text = titleData
+        textView.text = titleData.movieTitle
 
         return textView
     }
