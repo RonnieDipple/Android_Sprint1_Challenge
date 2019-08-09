@@ -14,7 +14,7 @@ class EditActivity : AppCompatActivity() {
         const val TITL_REQUEST_CODE = 96
     }
 
-    private var titleData = TitleData()
+    private var titleData = TitleData("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +23,7 @@ class EditActivity : AppCompatActivity() {
 
         btn_save.setOnClickListener {
             titleData.getUri().toString()
+            btn_toggle.textOn
             val intent = Intent()
             intent.putExtra(TitleData.TITLE_TAG, titleData)
             setResult(Activity.RESULT_OK, intent)
