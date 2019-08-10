@@ -8,16 +8,15 @@ import android.os.Bundle
 import android.widget.TextView
 import com.example.android_sprint1_challenge.R
 import com.example.android_sprint1_challenge.model.TitleData
-import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity() {
+    var movieList = mutableListOf<TitleData>()
 
     companion object{
-        const val ADD_TITLE_CODE = 69
+        const val REQUEST_CODE_EDIT_MOVIE_TITLE = 2
     }
 
-    private val titleList = mutableListOf<TitleData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,43 +24,47 @@ class ListActivity : AppCompatActivity() {
 
         btn_add_movie.setOnClickListener {
             val intent = Intent (this, EditActivity::class.java)
-            startActivityForResult(intent,
-                ADD_TITLE_CODE
-            )
+            startActivityForResult(intent, REQUEST_CODE_EDIT_MOVIE_TITLE)
         }
 
 
-        val extra = intent.getSerializableExtra(TitleData.TITLE_TAG)
-        if(extra!=null){
-            populateList(ADD_TITLE_CODE)
+    }
 
+    fun refreshMovieTitleList(){
+        movie_list_layout.removeAllViews()
+        for((counter, movieTitle) in movieList.withIndex()){
+            movie_list_layout.addView(createTextView(movieTitle, counter))
         }
 
+    }
 
+    override fun onPostResume() {
+
+        refreshMovieTitleList()
+        super.onPostResume()
     }
 
     fun createTextView(titleData: TitleData, index: Int): TextView{
-        val textView = TextView(this)
-        textView.textSize = 15f
-        //TODO may display title wrong
-        textView.id = index
-        textView.text = titleData.getUri().toString()
+        val newMovieTitleView = TextView(this)
+        newMovieTitleView.textSize = 15f
+        newMovieTitleView.id = index
+        newMovieTitleView.text = titleData.title
         movie_list_layout.setBackgroundColor(Color.CYAN)
-        return textView
-    }
+        newMovieTitleView.setOnClickListener {
+            var intent = Intent(this, EditActivity::class.java)
+            intent.putExtra(TitleData.TITLE_TAG, movieList[newMovieTitleView.id])
+            movieList.removeAt(newMovieTitleView.id)
+            startActivityForResult(intent, REQUEST_CODE_EDIT_MOVIE_TITLE)
 
-    fun populateList(index: Int){
-        movie_list_layout.removeAllViews()
-        for (titleData in titleList){
-            movie_list_layout.addView(createTextView(titleData, index))
         }
+        return newMovieTitleView
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ADD_TITLE_CODE && resultCode == Activity.RESULT_OK){
-            val titleData = data?.getSerializableExtra(TitleData.TITLE_TAG) as TitleData
-            titleList.add(titleData)
-            populateList(titleList.size-1)
+        if (requestCode == REQUEST_CODE_EDIT_MOVIE_TITLE && resultCode == Activity.RESULT_OK) {
+            val newResultBook = data?.getSerializableExtra(TitleData.TITLE_TAG) as TitleData
+            movieList.add(newResultBook)
         }
     }
+
 }
