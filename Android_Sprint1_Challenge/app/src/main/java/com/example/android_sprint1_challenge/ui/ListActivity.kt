@@ -62,8 +62,8 @@ class ListActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_EDIT_MOVIE_TITLE && resultCode == Activity.RESULT_OK) {
-            val newResultBook = data?.getSerializableExtra(TitleData.TITLE_TAG) as TitleData
-            movieList.add(newResultBook)
+            val newResultMovie = data?.getSerializableExtra(TitleData.TITLE_TAG) as TitleData
+            movieList.add(newResultMovie)
         }
     }
 
